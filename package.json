@@ -2,9 +2,8 @@
   "name": "tumblr-auth",
   "version": "1.0.0",
   "description": "A sample app that demonstrates oauth to tumblr",
-  "main": "app/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "babel-node app/server/server.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +16,7 @@
   },
   "homepage": "https://github.com/amyrebecca/tumblr-auth#readme",
   "dependencies": {
+    "babel-cli": "^6.6.0",
     "express": "^4.13.4",
     "grant": "^3.5.5",
     "webpack": "^1.12.14"
