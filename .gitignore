@@ -34,3 +34,8 @@ node_modules
 
 # compiled outputs
 /dist/
+
+# secrets
+consumer.json
+token.json
+grant-config.json
