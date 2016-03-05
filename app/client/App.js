@@ -19,9 +19,7 @@ export default class App extends React.Component {
         return response.json()
     }).
     then(responseObj  => {
-      var posts = this.state.posts
-      posts.push(responseObj)
-      this.setState({posts: posts})
+      this.setState({posts: responseObj})
     }).
     catch(err => err.text()).
     then(errMesg => this.setState({message: errMesg}))
@@ -37,7 +35,7 @@ export default class App extends React.Component {
         app here
         <dl>
         {this.state.posts.map(function(post,i){
-          return <div key={i}><dt>{post.title}</dt><dd>{post.contents}</dd></div>
+          return <div key={i}><dt>{post.title}</dt><dd>{post.summary}</dd></div>
         })}
         </dl>
         {this.state.message}
