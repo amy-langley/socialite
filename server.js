@@ -17,8 +17,14 @@ app.use(session({secret: 'shh dont tell', resave: false, saveUninitialized: fals
 app.use(grant)
 
 app.get('/handle_tumblr_callback', function(req,res){
-  console.log(req.query);
-  res.end(JSON.stringify(req.query, null, 2))
+  req.session.credentials = {
+    access_token:  req.query.access_token,
+    access_secret: req.query.access_secret,
+    oauth_token:   req.query.raw.oauth_token,
+    oauth_token_secret: req.query.raw.oauth_token_secret
+  }
+  // res.end(JSON.stringify(req.query, null, 2)+JSON.stringify(req.session,null,2))
+  res.redirect('/home')
 })
 
 if (isDeveloping) {
@@ -38,13 +44,13 @@ if (isDeveloping) {
 
   app.use(middleware)
   app.use(webpackHotMiddleware(compiler))
-  app.get('*', function response(req, res) {
+  app.get('/home', function response(req, res) {
     res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')))
     res.end()
   })
 } else {
   app.use(express.static(__dirname + '/dist'))
-  app.get('*', function response(req, res) {
+  app.get('/home', function response(req, res) {
     res.sendFile(path.join(__dirname, 'dist/index.html'))
   })
 }

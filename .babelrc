@@ -1,9 +1,17 @@
 {
   "presets": ["es2015", "stage-0"],
   "env": {
-    // only enable it when process.env.NODE_ENV is 'development' or undefined
     "development": {
-      "plugins": []
+      "plugins": [
+        ["react-transform", {
+          "transforms": [{
+            "transform": "react-transform-hmr",
+            "imports": ["react"],
+            "locals": ["module"]
+          }]
+        }],
+        ["transform-react-jsx"]
+      ]
     }
   }
 }
