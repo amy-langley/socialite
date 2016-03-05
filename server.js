@@ -16,6 +16,18 @@ const grant = new Grant(require('./grant-config.json'))
 app.use(session({secret: 'shh dont tell', resave: false, saveUninitialized: false}))
 app.use(grant)
 
+app.get('/api/logout', function(req, res){
+  req.session.destroy()
+  res.redirect('/home')
+})
+
+app.get('/api/posts', function(req, res){
+  if(!req.session.credentials)
+    throw 'not logged in'
+
+  res.end(JSON.stringify({title: 'title4', contents: 'contents 4'}))
+})
+
 app.get('/handle_tumblr_callback', function(req,res){
   req.session.credentials = {
     access_token:  req.query.access_token,
@@ -23,7 +35,8 @@ app.get('/handle_tumblr_callback', function(req,res){
     oauth_token:   req.query.raw.oauth_token,
     oauth_token_secret: req.query.raw.oauth_token_secret
   }
-  // res.end(JSON.stringify(req.query, null, 2)+JSON.stringify(req.session,null,2))
+
+  req.session.save()
   res.redirect('/home')
 })
 
