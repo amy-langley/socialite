@@ -1,4 +1,5 @@
 import React from 'react'
+import Feed from './components/feed.js'
 
 export default class App extends React.Component {
   constructor(props) {

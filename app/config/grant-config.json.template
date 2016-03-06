@@ -1,0 +1,11 @@
+{
+  "server": {
+    "protocol": "http",
+    "host": "dummy.com:3000"
+  },
+  "tumblr": {
+    "key": "[YOUR CONSUMER KEY HERE]",
+    "secret": "[YOUR CONSUMER SECRET HERE]",
+    "callback": "/api/tumblr/register"
+  }
+}
