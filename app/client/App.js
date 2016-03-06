@@ -11,8 +11,8 @@ export default class App extends React.Component {
   }
 
   doFetch = () => {
-    this.setState({message: ''})
-    fetch('/api/posts', {credentials: 'include'}).
+    this.setState({message: 'Loading...'})
+    fetch('/api/tumblr/posts/aetherstragic', {credentials: 'include'}).
       then(response => {
         if(!response.ok)
           throw response
