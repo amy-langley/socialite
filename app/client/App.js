@@ -5,12 +5,12 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      test: 'foo',
       message: 'Loading',
       posts: [ ]
     };
   }
 
+  /*
   doFetch = () => {
     this.setState({message: 'Loading...'})
     fetch('/api/tumblr/posts/aetherstragic', {credentials: 'include'}).
@@ -20,16 +20,21 @@ export default class App extends React.Component {
         return response.json()
     }).
     then(responseObj  => {
-      this.setState({posts: responseObj})
+      this.setState({posts: responseObj, message: ''})
     }).
     catch(err => err.text()).
     then(errMesg => this.setState({message: errMesg}))
   }
+  */
 
   componentDidMount(){
-    this.doFetch()
+    // this.doFetch()
   }
 
+  render() { return (
+    <Feed adapter="tumblr" username="aetherstragic" />)
+  }
+  /*
   render() {
     return (
       <div>
@@ -43,5 +48,5 @@ export default class App extends React.Component {
         <button onClick={this.doFetch}>retry</button><br/>
         <a href="/connect/tumblr">log in</a> <a href="/api/logout">log out</a>
       </div>)
-  }
+  }*/
 }

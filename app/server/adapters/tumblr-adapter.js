@@ -9,11 +9,9 @@ export default class TumblrAdapter {
     var router = express.Router()
 
     router.get('/register', function(req,res){
-      req.session.credentials = req.session.credentials || []
-      req.session.credentials['tumblr'] = self.handleCredentials(req)
-      req.session.save()
-
-      res.redirect('/home')
+      req.session.credentials = req.session.credentials || {}
+      req.session.credentials.tumblr = self.handleCredentials(req)
+      req.session.save( () => res.redirect('/home') )
     })
 
     router.get('/posts/:p', self.fetchPosts)
