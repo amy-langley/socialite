@@ -15,7 +15,7 @@ const app = express()
 
 const tumblrAdapter = new TumblrAdapter()
 
-app.use(session({secret: 'shh dont tell', resave: true, saveUninitialized: false}))
+app.use(session({secret: 'shh dont tell', resave: false, saveUninitialized: false}))
 app.use(new Grant(require('./app/config/grant-config.json')))
 app.use('/api/tumblr',tumblrAdapter.middleware())
 
