@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A sample app that demonstrates oauth to tumblr",
   "scripts": {
-    "start": "babel-node server.js",
+    "start": "babel-node app/server/main.js",
     "build": "rimraf dist && NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors"
   },
   "repository": {
