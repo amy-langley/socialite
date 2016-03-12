@@ -12,6 +12,18 @@
         }],
         ["transform-react-jsx"]
       ]
+    },
+    "production": {
+      "plugins": [
+        ["react-transform", {
+          "transforms": [{
+            "transform": "react-transform-hmr",
+            "imports": ["react"],
+            "locals": ["module"]
+          }]
+        }],
+        ["transform-react-jsx"]
+      ]
     }
   }
 }
