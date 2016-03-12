@@ -5,18 +5,20 @@ import session from 'express-session'
 import webpack from 'webpack'
 import webpackMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
-import config from './webpack.config.js'
+import config from '../../webpack.config.js'
 import Grant from 'grant-express'
-import TumblrAdapter from './app/server/adapters/tumblr-adapter.js'
+import TumblrAdapter from './adapters/tumblr-adapter.js'
 
 const isDeveloping = process.env.NODE_ENV !== 'production'
 const port = isDeveloping ? 3000 : process.env.PORT
 const app = express()
 
 const tumblrAdapter = new TumblrAdapter()
+const grantConfig = require('../config/grant-config.json')
+console.log(grantConfig)
 
 app.use(session({secret: 'shh dont tell', resave: false, saveUninitialized: false}))
-app.use(new Grant(require('./app/config/grant-config.json')))
+app.use(new Grant(grantConfig))
 app.use('/api/tumblr',tumblrAdapter.middleware())
 
 app.get('/api/logout', function(req, res){
