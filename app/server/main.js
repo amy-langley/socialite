@@ -44,7 +44,7 @@ if (isDeveloping) {
   app.use(webpackHotMiddleware(compiler))
   app.get('/home', function response(req, res) {
     var p = path.join(__dirname, '..', '..', 'dist', 'index.html')
-    
+
     res.write(middleware.fileSystem.readFileSync(p))
     res.send()
   })

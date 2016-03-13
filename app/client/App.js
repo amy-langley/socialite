@@ -6,11 +6,22 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       message: 'Loading',
-      posts: [ ]
+      posts: [ ],
+      feeds: [
+        { adapter: 'tumblr', feed: 'aetherstragic' },
+        { adapter: 'tumblr', feed: 'just-discourse-things' }
+      ]
     };
   }
 
-  render() { return (
-    <Feed adapter="tumblr" username="aetherstragic" />)
+  render() {
+    var feeds = this.state.feeds.map((feed,idx) => {
+      return <Feed key={feed.feed+idx} adapter={feed.adapter} username={feed.feed} />
+    })
+    return (
+      <div>
+        {feeds}
+      </div>
+    )
   }
 }
