@@ -15,7 +15,6 @@ const app = express()
 
 const tumblrAdapter = new TumblrAdapter()
 const grantConfig = require('../config/grant-config.json')
-console.log(grantConfig)
 
 app.use(session({secret: 'shh dont tell', resave: false, saveUninitialized: false}))
 app.use(new Grant(grantConfig))
@@ -44,7 +43,8 @@ if (isDeveloping) {
   app.use(middleware)
   app.use(webpackHotMiddleware(compiler))
   app.get('/home', function response(req, res) {
-    res.write(middleware.fileSystem.readFileSync(path.join(__dirname, 'dist/index.html')))
+    var p = path.join(__dirname, '..', '..', 'dist', 'index.html')
+    res.write(middleware.fileSystem.readFileSync(p))
     res.send()
   })
 } else {
