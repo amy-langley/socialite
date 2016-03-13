@@ -1,21 +1,21 @@
 {
-  "name": "tumblr-auth",
+  "name": "socialite",
   "version": "1.0.0",
-  "description": "A sample app that demonstrates oauth to tumblr",
+  "description": "socialite",
   "scripts": {
     "start": "nodemon --exec babel-node app/server/main.js",
     "build": "rimraf dist && NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amyrebecca/tumblr-auth.git"
+    "url": "git+https://github.com/amyrebecca/socialite.git"
   },
   "author": "Amy Boyer <amy.r.boyer@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/amyrebecca/tumblr-auth/issues"
+    "url": "https://github.com/amyrebecca/socialite/issues"
   },
-  "homepage": "https://github.com/amyrebecca/tumblr-auth#readme",
+  "homepage": "https://github.com/amyrebecca/socialite#readme",
   "dependencies": {
     "express": "^4.13.4",
     "express-session": "^1.13.0",
