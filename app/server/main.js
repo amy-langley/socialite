@@ -8,6 +8,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware'
 import config from '../../webpack.config.js'
 import Grant from 'grant-express'
 import TumblrAdapter from './adapters/tumblr-adapter.js'
+import {user, linkedAccount} from '../shared/models/schema.js'
 
 const isDeveloping = process.env.NODE_ENV !== 'production'
 const port = isDeveloping ? 3000 : process.env.PORT
@@ -19,6 +20,13 @@ const grantConfig = require('../config/grant-config.json')
 app.use(session({secret: 'shh dont tell', resave: false, saveUninitialized: false}))
 app.use(new Grant(grantConfig))
 app.use('/api/tumblr',tumblrAdapter.middleware())
+
+app.use('/api/session', function(req, res){
+  req.session.userId = req.session.userId || 1
+    user.findAll({where: {id: req.session.userId}, include: [{model: linkedAccount}]}).then(result => {
+      res.send(JSON.stringify(result))
+    })
+})
 
 app.get('/api/logout', function(req, res){
   req.session.destroy()

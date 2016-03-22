@@ -7,11 +7,20 @@ export default class App extends React.Component {
     this.state = {
       message: 'Loading',
       posts: [ ],
-      feeds: [
-        { adapter: 'tumblr', feed: 'aetherstragic' },
-        { adapter: 'tumblr', feed: 'just-discourse-things' }
-      ]
+      feeds: [ ]
     };
+  }
+
+  componentDidMount(){
+    fetch(`/api/session`, {credentials: 'include'}).
+      then(response => {
+        return response.json()
+      }).then(response => {
+        var feeds = response[0].linked_accounts.map(a => {
+          return { adapter: a.service, feed: a.username }
+        })
+        this.setState({feeds: feeds})
+      })
   }
 
   render() {
