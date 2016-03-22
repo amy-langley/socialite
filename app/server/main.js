@@ -8,17 +8,20 @@ import webpackHotMiddleware from 'webpack-hot-middleware'
 import config from '../../webpack.config.js'
 import Grant from 'grant-express'
 import TumblrAdapter from './adapters/tumblr-adapter.js'
+import TwitterAdapter from './adapters/twitter-adapter.js'
 
 const isDeveloping = process.env.NODE_ENV !== 'production'
 const port = isDeveloping ? 3000 : process.env.PORT
 const app = express()
 
-const tumblrAdapter = new TumblrAdapter()
+const tumblrAdapter = new TumblrAdapter();
+const twitterAdapter = new TwitterAdapter();
 const grantConfig = require('../config/grant-config.json')
 
 app.use(session({secret: 'shh dont tell', resave: false, saveUninitialized: false}))
 app.use(new Grant(grantConfig))
-app.use('/api/tumblr',tumblrAdapter.middleware())
+app.use('/api/tumblr',tumblrAdapter.middleware());
+app.use('/api/twitter', twitterAdapter.middleware());
 
 app.get('/api/logout', function(req, res){
   req.session.destroy()

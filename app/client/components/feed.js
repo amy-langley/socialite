@@ -40,7 +40,7 @@ export default class Feed extends React.Component{
         </dl>
         {this.state.message}
         <button onClick={this.fetchPosts}>retry</button><br/>
-        <a href="/connect/tumblr">log in</a> <a href="/api/logout">log out</a>
+        <a href={`/connect/${this.props.adapter}`}>log in</a> <a href="/api/logout">log out</a>
       </div>)
   }
 }
