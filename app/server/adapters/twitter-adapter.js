@@ -35,7 +35,7 @@ export default class TwitterAdapter {
       res.status(500).send('Not logged in');
       return;
     }
-    console.log(credentials)
+    
 		var twitter = new Twitter(credentials);
 
 		twitter.get('statuses/user_timeline', (err, tweet, response) => {
@@ -43,17 +43,5 @@ export default class TwitterAdapter {
       else { console.log(tweet); }
       res.send();
     });
-
-    // var blog = req.params.p;
-    // var credentials = req.session.credentials ?
-    //   req.session.credentials['twitter'] :
-    //   null;
-
-
-    // var twitter = twitter.createClient(credentials);
-    // twitter.posts(blog, (err, resp) => {
-    //   if(err) res.status(500).send(JSON.stringify(err))
-    //   else res.send(JSON.stringify(resp.posts))
-    // });
   };
 };
