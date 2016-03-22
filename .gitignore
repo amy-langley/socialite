@@ -39,3 +39,7 @@ node_modules
 consumer.json
 token.json
 grant-config.json
+salt.json
+
+# database
+socialite.db
