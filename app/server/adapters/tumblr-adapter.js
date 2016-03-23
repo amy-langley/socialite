@@ -1,31 +1,40 @@
 import express from 'express'
 import Tumblr from 'tumblr.js'
 import grantconfig from '../../config/grant-config.json'
+import schema from '../../shared/models/schema.js'
 
 export default class TumblrAdapter {
 
-  middleware(){
-    var self  = this
+  middleware = () => {
     var router = express.Router()
 
-    router.get('/register', function(req,res){
-      req.session.credentials = req.session.credentials || {}
-      req.session.credentials.tumblr = self.handleCredentials(req)
-      req.session.save( () => res.redirect('/home') )
-    })
-
-    router.get('/posts/:p', self.fetchPosts)
-
+    router.get('/register', this.authenticate)
+    router.get('/posts/:p', this.fetchPosts)
     return router
   }
 
-  handleCredentials(req){
-    return {
+  authenticate(req, res){
+    req.session.credentials = req.session.credentials || {}
+
+    var credentials = {
       consumer_key: grantconfig.tumblr.key,
       consumer_secret: grantconfig.tumblr.secret,
       token: req.query.access_token,
       token_secret: req.query.access_secret
     }
+    
+    req.session.credentials.tumblr = credentials
+
+    if(req.session.linking){
+      var linkId = req.session.linking
+      delete req.session.linking
+      schema.linkedAccount.findOne({where: {id: linkId}}).
+        then(acct => Object.assign(acct, {token: credentials.token, secret: credentials.token_secret})).
+        then(acct => acct.save()).
+        then(res.redirect('/home'))
+    }
+    else
+      res.redirect('/home')
   }
 
   fetchPosts(req,res){

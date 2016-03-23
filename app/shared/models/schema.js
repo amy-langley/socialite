@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var sequelize = new Sequelize('sqlite://socialite.db')
+var sequelize = new Sequelize('sqlite://socialite.db', {logging: false})
 
 var User = sequelize.define('user', {
   id: {

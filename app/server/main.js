@@ -5,8 +5,10 @@ import session from 'express-session'
 import webpack from 'webpack'
 import webpackMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
-import config from '../../webpack.config.js'
+import bodyParser from 'body-parser'
 import Grant from 'grant-express'
+
+import config from '../../webpack.config.js'
 import TumblrAdapter from './adapters/tumblr-adapter.js'
 import {user, linkedAccount} from '../shared/models/schema.js'
 
@@ -17,15 +19,24 @@ const app = express()
 const tumblrAdapter = new TumblrAdapter()
 const grantConfig = require('../config/grant-config.json')
 
-app.use(session({secret: 'shh dont tell', resave: false, saveUninitialized: false}))
-app.use(new Grant(grantConfig))
-app.use('/api/tumblr',tumblrAdapter.middleware())
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json())
 
-app.use('/api/session', function(req, res){
+app.use(session({secret: 'shh dont tell', resave: true, saveUninitialized: false}))
+
+app.use(new Grant(grantConfig))
+
+app.use('/api/tumblr',new TumblrAdapter().middleware())
+
+app.get('/api/session', function(req, res){
   req.session.userId = req.session.userId || 1
-    user.findAll({where: {id: req.session.userId}, include: [{model: linkedAccount}]}).then(result => {
-      res.send(JSON.stringify(result))
-    })
+  user.findAll({where: {id: req.session.userId}, include: [{model: linkedAccount}]}).then(result => {
+    res.send(JSON.stringify(result))
+  })
+})
+app.post('/api/session', function(req, res){
+  Object.assign(req.session, req.body)
+  res.sendStatus(200)
 })
 
 app.get('/api/logout', function(req, res){

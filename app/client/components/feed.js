@@ -29,6 +29,20 @@ export default class Feed extends React.Component{
     this.fetchPosts()
   }
 
+  authenticateAdapter = () => {
+    fetch(`/api/session`, {
+      credentials: 'include',
+      method: 'post',
+      headers: new Headers({
+      'Content-Type': 'application/json'
+    }),
+      body: JSON.stringify({linking: this.props.id})
+    }).then(()=>{
+      //todo: arb: this is janky
+      window.location.href='/connect/tumblr'
+    })
+  }
+
   render() {
     return (
       <div>
@@ -40,6 +54,7 @@ export default class Feed extends React.Component{
         </dl>
         {this.state.message}
         <button onClick={this.fetchPosts}>retry</button><br/>
+        <button onClick={this.authenticateAdapter}>boo</button><br/>
         <a href="/connect/tumblr">log in</a> <a href="/api/logout">log out</a>
       </div>)
   }
