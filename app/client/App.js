@@ -26,8 +26,7 @@ export default class App extends React.Component {
       return <Feed
         key={feed.id}
         id={feed.id}
-        adapter={feed.adapter}
-        username={feed.feed} />
+        adapter={feed.adapter} />
     })
     return <div>{feeds}</div>
   }

@@ -13,17 +13,17 @@ export default class TumblrAdapter {
     return router
   }
 
-  authenticate(req, res){
-    req.session.credentials = req.session.credentials || {}
-
-    var credentials = {
+  makeCredentials(token,secret){
+    return{
       consumer_key: grantconfig.tumblr.key,
       consumer_secret: grantconfig.tumblr.secret,
-      token: req.query.access_token,
-      token_secret: req.query.access_secret
+      token: token,
+      token_secret: secret
     }
-    
-    req.session.credentials.tumblr = credentials
+  }
+
+  authenticate = (req, res) => {
+    var credentials = this.makeCredentials(req.query.access_token, req.query.access_secret)
 
     if(req.session.linking){
       var linkId = req.session.linking
@@ -37,21 +37,20 @@ export default class TumblrAdapter {
       res.redirect('/home')
   }
 
-  fetchPosts(req,res){
-    var blog = req.params.p
-    var credentials = req.session.credentials ?
-      req.session.credentials['tumblr'] :
-      null
+  fetchPosts = (req,res) => {
+    var acctId = req.params.p
 
-    if(!credentials){
-      res.status(500).send('Not logged in')
-      return
-    }
-
-    var tumblr = Tumblr.createClient(credentials)
-    tumblr.posts(blog, (err, resp) => {
-      if(err) res.status(500).send(JSON.stringify(err))
-      else res.send(JSON.stringify(resp.posts))
-    })
+    schema.linkedAccount.findOne({where: {id: acctId}}).
+      then(acct => {
+        if(!acct.token || !acct.secret)
+          res.status(500).send('Not logged in')
+        else {
+          var tumblr = Tumblr.createClient(this.makeCredentials(acct.token, acct.secret))
+          tumblr.posts(acct.username, (err, resp) => {
+            if(err) res.status(500).send(JSON.stringify(err))
+            else res.send(JSON.stringify(resp.posts))
+          })
+        }
+      })
   }
 }

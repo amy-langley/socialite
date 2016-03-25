@@ -12,10 +12,11 @@ export default class Feed extends React.Component{
 
   fetchPosts = () => {
     this.setState({message: 'Loading...'})
-    fetch(`/api/${this.props.adapter}/posts/${this.props.username}`, {credentials: 'include'}).
+    fetch(`/api/${this.props.adapter}/posts/${this.props.id}`, {credentials: 'include'}).
       then(response => {
         if(!response.ok)
           throw response
+
         return response.json()
     }).
     then(responseObj  => {
@@ -38,8 +39,7 @@ export default class Feed extends React.Component{
     }),
       body: JSON.stringify({linking: this.props.id})
     }).then(()=>{
-      //todo: arb: this is janky
-      window.location.href='/connect/tumblr'
+      window.location.href=`/connect/${this.props.adapter}`
     })
   }
 
@@ -53,13 +53,13 @@ export default class Feed extends React.Component{
         })}
         </dl>
         {this.state.message}
-        <button onClick={this.fetchPosts}>retry</button><br/>
-        <button onClick={this.authenticateAdapter}>boo</button><br/>
-        <a href="/connect/tumblr">log in</a> <a href="/api/logout">log out</a>
+        <button onClick={this.fetchPosts}>retry</button>
+        <button onClick={this.authenticateAdapter}>connect</button>
+        <a href="/api/logout">log out</a>
       </div>)
   }
 }
 Feed.propTypes = {
   adapter: React.PropTypes.string.isRequired,
-  username: React.PropTypes.string.isRequired
+  id: React.PropTypes.number.isRequired
 };
