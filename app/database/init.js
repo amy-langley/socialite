@@ -32,9 +32,9 @@ User.sync({force: true}).then(function () {
       username: 'just-discourse-things'
     })
     LinkedAccount.create({
-      userId: 2,
+      userId: 1,
       service: 'twitter',
-      username: 'twitter'
+      username: 'umsweatie'
     })
   }).then(function(){
     return User.findAll({where: {id: 1}, include: [{model: LinkedAccount}]})
