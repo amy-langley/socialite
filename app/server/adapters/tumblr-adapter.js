@@ -1,48 +1,56 @@
 import express from 'express'
 import Tumblr from 'tumblr.js'
 import grantconfig from '../../config/grant-config.json'
+import schema from '../../shared/models/schema.js'
 
 export default class TumblrAdapter {
 
-  middleware(){
-    var self  = this
+  middleware = () => {
     var router = express.Router()
 
-    router.get('/register', function(req,res){
-      req.session.credentials = req.session.credentials || {}
-      req.session.credentials.tumblr = self.handleCredentials(req)
-      req.session.save( () => res.redirect('/home') )
-    })
-
-    router.get('/posts/:p', self.fetchPosts)
-
+    router.get('/register', this.authenticate)
+    router.get('/posts/:p', this.fetchPosts)
     return router
   }
 
-  handleCredentials(req){
-    return {
+  makeCredentials(token,secret){
+    return{
       consumer_key: grantconfig.tumblr.key,
       consumer_secret: grantconfig.tumblr.secret,
-      token: req.query.access_token,
-      token_secret: req.query.access_secret
+      token: token,
+      token_secret: secret
     }
   }
 
-  fetchPosts(req,res){
-    var blog = req.params.p
-    var credentials = req.session.credentials ?
-      req.session.credentials['tumblr'] :
-      null
+  authenticate = (req, res) => {
+    var credentials = this.makeCredentials(req.query.access_token, req.query.access_secret)
 
-    if(!credentials){
-      res.status(500).send('Not logged in')
-      return
+    if(req.session.linking){
+      var linkId = req.session.linking
+      delete req.session.linking
+      schema.linkedAccount.findOne({where: {id: linkId}}).
+        then(acct => Object.assign(acct, {token: credentials.token, secret: credentials.token_secret})).
+        then(acct => acct.save()).
+        then(res.redirect('/home'))
     }
+    else
+      res.redirect('/home')
+  }
 
-    var tumblr = Tumblr.createClient(credentials)
-    tumblr.posts(blog, (err, resp) => {
-      if(err) res.status(500).send(JSON.stringify(err))
-      else res.send(JSON.stringify(resp.posts))
-    })
+  fetchPosts = (req,res) => {
+    var acctId = req.params.p
+
+    schema.linkedAccount.findOne({where: {id: acctId}}).
+      then(acct => {
+        if(!acct.token || !acct.secret)
+          res.status(500).send('Not logged in')
+        else {
+          var tumblr = Tumblr.createClient(this.makeCredentials(acct.token, acct.secret))
+          tumblr.posts(acct.username, (err, resp) => {
+            if(err) res.status(500).send(JSON.stringify(err))
+            else res.send(JSON.stringify(resp.posts))
+          })
+        }
+      })
   }
 }
