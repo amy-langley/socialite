@@ -44,19 +44,26 @@ export default class Feed extends React.Component{
   }
 
   render() {
+    var iconClass = ['fa', `fa-${this.props.adapter}`].join(' ')
     return (
-      <div>
-        <h3>{this.props.adapter}</h3>
-        <dl>
+      <div className="uk-width-1-3 uk-height-viewport">
+      <div className="uk-panel" style={{padding: '1em'}}>
+        <div className="uk-float-right">
+          <button className="uk-button uk-button-small uk-button-primary uk-margin-right" onClick={this.fetchPosts}>retry</button>
+          <button className="uk-button uk-button-small uk-button-success uk-margin-right" onClick={this.authenticateAdapter}>connect</button>
+          <a className="uk-button uk-button-small uk-button-danger" href="/api/logout">log out</a>
+        </div>
+        <h3 className="uk-panel-title"><i className={iconClass}></i> {this.props.username}</h3>
         {this.state.posts.map(function(post,i){
           var markup = {__html: post.markup}
-          return <div key={i}><dt>{post.title}</dt><dd><div dangerouslySetInnerHTML={markup} /></dd></div>
+          return <div key={i} className="uk-panel uk-panel-box" style={{marginBottom: '1em'}}>
+            <h4 className="uk-panel-header uk-panel-title">{post.title}</h4>
+            <div style={{overflowX: 'hidden'}} dangerouslySetInnerHTML={markup} />
+            <div className="uk-badge uk-float-right">{post.score}</div>
+          </div>
         })}
-        </dl>
         {this.state.message}
-        <button onClick={this.fetchPosts}>retry</button>
-        <button onClick={this.authenticateAdapter}>connect</button>
-        <a href="/api/logout">log out</a>
+      </div>
       </div>)
   }
 }

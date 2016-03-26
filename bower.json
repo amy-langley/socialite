@@ -1,0 +1,24 @@
+{
+  "name": "socialite",
+  "description": "socialite",
+  "main": "",
+  "authors": [
+    "Amy Boyer <amy.r.boyer@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/amyrebecca/socialite",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/assets/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "uikit": "^2.25.0",
+    "font-awesome": "fontawesome#^4.5.0"
+  }
+}
