@@ -3,6 +3,7 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   devtool: 'eval-source-map',
@@ -16,6 +17,9 @@ module.exports = {
     publicPath: '/'
   },
   plugins: [
+    new CopyWebpackPlugin([
+      {from: 'app/assets', to: 'assets' }
+    ]),
     new HtmlWebpackPlugin({
       template: 'app/client/index.tpl.html',
       inject: 'body',
