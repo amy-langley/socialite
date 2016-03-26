@@ -26,9 +26,17 @@ export default class App extends React.Component {
       return <Feed
         key={feed.id}
         id={feed.id}
+        username={feed.feed}
         adapter={feed.adapter} />
     })
-    return <div>{feeds}</div>
+    return <div className="uk-grid uk-height-viewport">
+        <div className="uk-width-1-1">
+          <div className="uk-panel uk-panel-box uk-panel-box-primary">
+            <span className="uk-panel-title"><i className="fa fa-comments"></i> sociali.te</span>
+          </div>
+        </div>
+        {feeds}
+      </div>
   }
 
 }
