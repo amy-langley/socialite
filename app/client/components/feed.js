@@ -44,9 +44,10 @@ export default class Feed extends React.Component{
   }
 
   render() {
+    var iconClass = ['fa', `fa-${this.props.adapter}`].join(' ')
     return (
       <div>
-        <h3>{this.props.adapter}</h3>
+        <h3><i className={iconClass}></i> {this.props.adapter}</h3>
         <dl>
         {this.state.posts.map(function(post,i){
           var markup = {__html: post.markup}
