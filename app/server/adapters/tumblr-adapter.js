@@ -37,12 +37,12 @@ export default class TumblrAdapter {
       res.redirect('/home')
   }
 
-  makeItem = (tumblrItem) => { return {
-    id: tumblrItem.id,
-    title: tumblrItem.title,
-    markup: tumblrItem.body,
+  makeItem = (post) => { return {
+    id: post.id,
+    title: post.title,
+    markup: post.body || post.photos[0].alt_sizes[1].url, //JSON.stringify(post.photos),
     source: 'tumblr',
-    score: tumblrItem.note_count
+    score: post.note_count
   } }
 
   fetchPosts = (req,res) => {
@@ -55,7 +55,6 @@ export default class TumblrAdapter {
         else {
           var tumblr = Tumblr.createClient(this.makeCredentials(acct.token, acct.secret))
           tumblr.posts(acct.username, (err, resp) => {
-            console.log(resp)
             if(err) res.status(500).send(JSON.stringify(err))
             else{
               var items = resp.posts.map(post => this.makeItem(post))

@@ -46,7 +46,7 @@ export default class Feed extends React.Component{
   render() {
     return (
       <div>
-        app here
+        <h3>{this.props.adapter}</h3>
         <dl>
         {this.state.posts.map(function(post,i){
           var markup = {__html: post.markup}
