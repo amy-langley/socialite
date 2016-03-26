@@ -49,7 +49,8 @@ export default class Feed extends React.Component{
         app here
         <dl>
         {this.state.posts.map(function(post,i){
-          return <div key={i}><dt>{post.title}</dt><dd>{post.summary}</dd></div>
+          var markup = {__html: post.markup}
+          return <div key={i}><dt>{post.title}</dt><dd><div dangerouslySetInnerHTML={markup} /></dd></div>
         })}
         </dl>
         {this.state.message}

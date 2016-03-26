@@ -32,7 +32,7 @@ User.sync({force: true}).then(function () {
       username: 'just-discourse-things'
     })
     LinkedAccount.create({
-      userId: 1,
+      userId: 2,
       service: 'twitter',
       username: 'umsweatie'
     })

@@ -46,7 +46,6 @@ export default class TwitterAdapter {
           res.status(500).send('Not logged in')
         else {
           var credentials = this.makeCredentials(acct.token, acct.secret)
-          console.log(credentials)
       		var twitter = new Twitter(credentials);
 
       		twitter.get('statuses/user_timeline', (err, tweet, response) => {
