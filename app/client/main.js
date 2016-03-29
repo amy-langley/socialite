@@ -8,7 +8,7 @@ import Dashboard from 'components/dashboard'
 var Root = React.createClass({
   render: function() {
     return (
-      <Router >
+      <Router history={browserHistory}>
         <Route path="/" component={App}>
           <IndexRoute component={Dashboard} />
         </Route>
