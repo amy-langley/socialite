@@ -27,6 +27,7 @@
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-redux": "^4.4.1",
+    "react-router": "^2.0.1",
     "redux": "^3.3.1",
     "sequelize": "^3.20.0",
     "sequelize-cli": "^2.3.1",
