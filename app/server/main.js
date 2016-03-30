@@ -45,7 +45,7 @@ app.use('/api/twitter', twitterAdapter.middleware());
 
 app.get('/api/logout', function(req, res){
   req.session.destroy()
-  res.redirect('/home')
+  res.redirect('/')
 })
 
 if (isDeveloping) {
