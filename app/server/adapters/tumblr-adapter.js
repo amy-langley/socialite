@@ -1,18 +1,15 @@
 import express from 'express'
 import Tumblr from 'tumblr.js'
 
-import grantconfig from '../../config/grant-config.json'
 import AdapterBase from './adapter-base.js'
 
 export default class TumblrAdapter extends AdapterBase{
 
-  makeCredentials(grant,query){
-    return{
-      consumer_key: grant.tumblr.key,
-      consumer_secret: grant.tumblr.secret,
-      token: query.access_token,
-      token_secret: query.access_secret
-    }
+  makeCredentials(acct){
+    var credentials = super.makeCredentials('tumblr', acct)
+    credentials.token = acct.access_token
+    credentials.token_secret = acct.access_secret
+    return credentials
   }
 
   makeItem(post){
@@ -25,11 +22,7 @@ export default class TumblrAdapter extends AdapterBase{
   } }
 
   fetchPosts(acct, res){
-    var tumblr = Tumblr.createClient(
-      this.makeCredentials(grantconfig, {
-        access_token: acct.token,
-        access_secret: acct.secret
-      }))
+    var tumblr = Tumblr.createClient(this.makeCredentials(acct))
 
     tumblr.posts(acct.username, (err, resp) => {
       if(err) res.status(500).send(JSON.stringify(err))

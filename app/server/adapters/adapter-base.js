@@ -10,6 +10,15 @@ export default class AdapterBase{
     // }
   }
 
+  makeCredentials(serviceName, tokenSource){
+    return {
+      consumer_key: grantConfig[serviceName].key,
+      consumer_secret: grantConfig[serviceName].secret,
+      access_token: tokenSource.access_token || tokenSource.token,
+      access_secret: tokenSource.access_secret || tokenSource.secret
+    }
+  }
+
   middleware(){
     var router = express.Router()
 
@@ -25,7 +34,7 @@ export default class AdapterBase{
       delete req.session.linking
 
       schema.linkedAccount.findOne({where: {id: linkId}}).
-        then(acct => Object.assign(acct, {token: credentials.token, secret: credentials.token_secret})).
+        then(acct => Object.assign(acct, {token: credentials.access_token, secret: credentials.access_secret})).
         then(acct => acct.save()).
         then(res.redirect('/'))
     }
