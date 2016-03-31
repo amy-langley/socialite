@@ -32,10 +32,10 @@ export default class TwitterAdapter {
         then(acct => Object.assign(acct, {token: credentials.access_token_key, secret: credentials.access_token_secret})).
         // then(acct => { console.log(acct); return acct}).
         then(acct => acct.save()).
-        then(res.redirect('/home'))
+        then(res.redirect('/'))
     }
     else
-      res.redirect('/home')
+      res.redirect('/')
   }
 
   makeItem = (tweet) => { return {

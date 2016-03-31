@@ -31,10 +31,10 @@ export default class TumblrAdapter {
       schema.linkedAccount.findOne({where: {id: linkId}}).
         then(acct => Object.assign(acct, {token: credentials.token, secret: credentials.token_secret})).
         then(acct => acct.save()).
-        then(res.redirect('/home'))
+        then(res.redirect('/'))
     }
     else
-      res.redirect('/home')
+      res.redirect('/')
   }
 
   makeItem = (post) => { return {
