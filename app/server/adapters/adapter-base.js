@@ -28,7 +28,7 @@ export default class AdapterBase{
   }
 
   authenticate = (req, res) => {
-    var credentials = this.makeCredentials(grant, req.query)
+    var credentials = this.makeCredentials(req.query)
     if(req.session.linking){
       var linkId = req.session.linking
       delete req.session.linking
