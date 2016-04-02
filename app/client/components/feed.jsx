@@ -46,7 +46,7 @@ export default class Feed extends React.Component{
   render() {
     var iconClass = ['fa', `fa-${this.props.adapter}`].join(' ')
     return (
-      <div className="uk-width-1-3 uk-height-viewport">
+      <div className="uk-width-1-3">
       <div className="uk-panel" style={{padding: '1em'}}>
         <div className="uk-float-right">
           <button className="uk-button uk-button-small uk-button-primary uk-margin-right" onClick={this.fetchPosts}>retry</button>
