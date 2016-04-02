@@ -49,9 +49,9 @@ export default class Feed extends React.Component{
       <div className="uk-width-1-3">
       <div className="uk-panel" style={{padding: '1em'}}>
         <div className="uk-float-right">
-          <button className="uk-button uk-button-small uk-button-primary uk-margin-right" onClick={this.fetchPosts}>retry</button>
-          <button className="uk-button uk-button-small uk-button-success uk-margin-right" onClick={this.authenticateAdapter}>connect</button>
-          <a className="uk-button uk-button-small uk-button-danger" href="/api/logout">log out</a>
+          <button className="uk-button uk-button-small uk-button-primary" onClick={this.fetchPosts}>retry</button>
+          <button className="uk-button uk-button-small uk-button-success uk-margin-left" onClick={this.authenticateAdapter}>connect</button>
+          <a className="uk-button uk-button-small uk-button-danger uk-margin-left" style={{display: 'none'}} href="/api/logout">log out</a>
         </div>
         <h3 className="uk-panel-title"><i className={iconClass}></i> {this.props.username}</h3>
         {this.state.posts.map(function(post,i){
