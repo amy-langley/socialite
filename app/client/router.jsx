@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { browserHistory, Router, Route, IndexRedirect } from 'react-router'
-import App from './App.js'
 
+import App from './app.jsx'
 import PageNotFound from 'pages/page-not-found'
 import Dashboard from 'pages/dashboard'
 import ConfigureAccounts from 'pages/configure-accounts'

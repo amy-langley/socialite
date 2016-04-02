@@ -28,12 +28,7 @@ export default class Dashboard extends React.Component {
         username={feed.feed}
         adapter={feed.adapter} />
     })
-    return <div className="uk-grid uk-height-viewport">
-        <div className="uk-width-1-1">
-          <div className="uk-panel uk-panel-box uk-panel-box-primary">
-            <span className="uk-panel-title"><i className="fa fa-comments"></i> sociali.te</span>
-          </div>
-        </div>
+    return <div className="uk-grid">
         {feeds}
       </div>
   }
