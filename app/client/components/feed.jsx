@@ -54,7 +54,7 @@ export default class Feed extends React.Component{
           <a className="uk-button uk-button-small uk-button-danger uk-margin-left" style={{display: 'none'}} href="/api/logout">log out</a>
         </div>
         <h3 className="uk-panel-title"><i className={iconClass}></i> {this.props.username}</h3>
-        {this.state.posts.map(function(post,i){
+        {this.props.posts.filter(post => post.source == this.props.adapter).map(function(post,i){
           var markup = {__html: post.markup}
           return <div key={i} className="uk-panel uk-panel-box" style={{marginBottom: '1em'}}>
             <h4 className="uk-panel-header uk-panel-title">{post.title}</h4>

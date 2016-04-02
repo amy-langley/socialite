@@ -1,0 +1,3 @@
+export const INITIALIZE_STORE = 'INITIALIZE_STORE'
+export const UPDATE_POSTS = 'UPDATE_POSTS'
+export const INSERT_POSTS = 'INSERT_POSTS'

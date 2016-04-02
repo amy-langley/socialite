@@ -10,7 +10,8 @@
             "locals": ["module"]
           }]
         }],
-        ["transform-react-jsx"]
+        ["transform-react-jsx"],
+        ["transform-decorators-legacy"]
       ]
     },
     "production": {
@@ -22,7 +23,8 @@
             "locals": ["module"]
           }]
         }],
-        ["transform-react-jsx"]
+        ["transform-react-jsx"],
+        ["transform-decorators-legacy"]
       ]
     }
   }
