@@ -28,7 +28,7 @@ export default class Dashboard extends React.Component {
         username={feed.feed}
         adapter={feed.adapter} />
     })
-    return <div className="uk-grid">
+    return <div className="uk-grid uk-grid-small">
         {feeds}
       </div>
   }
