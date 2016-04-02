@@ -1,5 +1,5 @@
 import React from 'react'
-import Feed from 'feed.js'
+import Feed from '../components/feed'
 
 export default class Dashboard extends React.Component {
   constructor(props) {
