@@ -4,6 +4,8 @@ import classnames from 'classnames'
 
 import * as creators from '../redux/action-creators/feed-actions.js'
 
+import FeedPost from './feedpost.jsx'
+
 @connect(state=>({feedState: state.feedReducer}))
 export default class Feed extends React.Component{
 
@@ -54,12 +56,7 @@ export default class Feed extends React.Component{
     filter(this.isMine).
     sortBy(post=>-post.id).
     map(function(post,i){
-      var markup = {__html: post.markup}
-        return <div key={i} className="uk-panel uk-panel-box" style={{marginBottom: '1em'}}>
-          <h4 className="uk-panel-header uk-panel-title">{post.title}</h4>
-          <div style={{overflowX: 'hidden'}} dangerouslySetInnerHTML={markup} />
-          <div className="uk-badge uk-float-right">{post.score}</div>
-        </div>
+      return <FeedPost key={i} post={post} />
     })
 
   isMine = (post) => post.source == this.props.adapter && post.username == this.props.username
