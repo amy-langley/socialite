@@ -18,6 +18,7 @@
   "homepage": "https://github.com/amyrebecca/socialite#readme",
   "dependencies": {
     "body-parser": "^1.15.0",
+    "classnames": "^2.2.3",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
     "fetch": "^1.0.1",

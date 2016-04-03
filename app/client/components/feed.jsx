@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import classnames from 'classnames'
 
 import * as creators from '../redux/action-creators/feed-actions.js'
 
@@ -9,12 +10,13 @@ export default class Feed extends React.Component{
   constructor(props){
     super(props)
     this.state = {
+      loading: false,
       message: ''
     }
   }
 
   fetchPosts = () => {
-    this.setState({message: 'Loading...'})
+    this.setState({message: 'Loading...', loading: true})
     fetch(`/api/${this.props.adapter}/posts/${this.props.id}`, {credentials: 'include'}).
       then(response => {
         if(!response.ok)
@@ -23,11 +25,11 @@ export default class Feed extends React.Component{
         return response.json()
     }).
     then(responseObj  => {
-      this.setState({message: ''})
+      this.setState({message: '', loading: false})
       this.props.dispatch(creators.insertPosts(responseObj))
     }).
     catch(err => err.text ? err.text() : err).
-    then(errMesg => this.setState({message: errMesg}))
+    then(errMesg => { this.setState({message: errMesg, loading: false})})
   }
 
   componentDidMount(){
@@ -47,27 +49,44 @@ export default class Feed extends React.Component{
     })
   }
 
+  handlePosts = (posts) => posts.
+    toList().
+    filter(this.isMine).
+    sortBy(post=>-post.id).
+    map(function(post,i){
+      var markup = {__html: post.markup}
+        return <div key={i} className="uk-panel uk-panel-box" style={{marginBottom: '1em'}}>
+          <h4 className="uk-panel-header uk-panel-title">{post.title}</h4>
+          <div style={{overflowX: 'hidden'}} dangerouslySetInnerHTML={markup} />
+          <div className="uk-badge uk-float-right">{post.score}</div>
+        </div>
+    })
+
   isMine = (post) => post.source == this.props.adapter && post.username == this.props.username
 
   render() {
     var iconClass = ['fa', `fa-${this.props.adapter}`].join(' ')
+    var refreshClass = classnames({
+      'fa': true,
+      'fa-refresh': true,
+      'fa-spin': this.state.loading
+    })
     return (
       <div className="uk-width-1-3">
       <div className="uk-panel" style={{padding: '1em'}}>
         <div className="uk-float-right">
-          <button className="uk-button uk-button-small uk-button-primary" onClick={this.fetchPosts}>retry</button>
-          <button className="uk-button uk-button-small uk-button-success uk-margin-left" onClick={this.authenticateAdapter}>connect</button>
-          <a className="uk-button uk-button-small uk-button-danger uk-margin-left" style={{display: 'none'}} href="/api/logout">log out</a>
+          <button
+            className="uk-button uk-button-small uk-button-primary"
+            disabled={this.state.loading}
+            onClick={this.fetchPosts}>
+            <i className={refreshClass}></i> update
+          </button>
+          <button className="uk-button uk-button-small uk-button-success uk-margin-left" onClick={this.authenticateAdapter}>
+            <i className="fa fa-exchange"></i> connect
+          </button>
         </div>
         <h3 className="uk-panel-title"><i className={iconClass}></i> {this.props.username}</h3>
-        {this.props.posts.filter(this.isMine).map(function(post,i){
-          var markup = {__html: post.markup}
-          return <div key={i} className="uk-panel uk-panel-box" style={{marginBottom: '1em'}}>
-            <h4 className="uk-panel-header uk-panel-title">{post.title}</h4>
-            <div style={{overflowX: 'hidden'}} dangerouslySetInnerHTML={markup} />
-            <div className="uk-badge uk-float-right">{post.score}</div>
-          </div>
-        })}
+        {this.handlePosts(this.props.posts)}
         {this.state.message}
       </div>
       </div>)

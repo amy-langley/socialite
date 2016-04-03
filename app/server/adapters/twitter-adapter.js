@@ -13,6 +13,7 @@ export default class TwitterAdapter extends AdapterBase{
 
   makeItem(tweet, username){
     return {
+      id: tweet.id,
       title: '',
       markup: tweet.text,
       source: 'twitter',

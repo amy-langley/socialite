@@ -1,16 +1,7 @@
 import Immutable from 'immutable'
 import * as types from '../constants/action-types.js'
 
-const samplePosts = [{
-  id: 9,
-  title: 'sample redux post',
-  markup: 'hello to tumblr from redux',
-  source: 'tumblr',
-  score: 5
-}]
-
-const postList = new Immutable.List([])
-// const postList = new Immutable.List(samplePosts)
+const postList = new Immutable.Map()
 
 export default function feedReducer(state = postList, action){
   switch(action.type){
@@ -25,5 +16,5 @@ export default function feedReducer(state = postList, action){
 }
 
 function insertPosts(state, posts){
-  return state.concat(posts)
+  return state.merge(new Immutable.Map(posts.map(post => [post.id, post])))
 }
