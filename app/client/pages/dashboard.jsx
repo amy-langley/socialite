@@ -1,12 +1,14 @@
 import React from 'react'
+import { connect } from 'react-redux'
+
 import Feed from '../components/feed'
 
+@connect(state=>({dashState: state.feedReducer}))
 export default class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       message: 'Loading',
-      posts: [ ],
       feeds: [ ]
     };
   }
@@ -21,8 +23,11 @@ export default class Dashboard extends React.Component {
   }
 
   render() {
+    const { dashState, dispatch } = this.props
     var feeds = this.state.feeds.map(feed => {
       return <Feed
+        dispatch={this.props.dispatch}
+        posts={dashState}
         key={feed.id}
         id={feed.id}
         username={feed.feed}
