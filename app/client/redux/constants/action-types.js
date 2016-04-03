@@ -1,0 +1,2 @@
+export const UPDATE_POSTS = 'UPDATE_POSTS'
+export const INSERT_POSTS = 'INSERT_POSTS'

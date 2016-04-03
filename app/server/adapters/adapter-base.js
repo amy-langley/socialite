@@ -50,8 +50,9 @@ export default class AdapterBase{
     then(acct => {
       if(!acct.token || !acct.secret)
         res.status(500).send('Not logged in')
-      else
+      else{
         this.fetchPosts(acct,res)
+      }
     })
   }
 }
