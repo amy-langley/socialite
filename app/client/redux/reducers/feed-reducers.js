@@ -4,21 +4,20 @@ import * as types from '../constants/action-types.js'
 const samplePosts = [{
   id: 9,
   title: 'sample redux post',
-  markup: 'hello from redux',
+  markup: 'hello to tumblr from redux',
   source: 'tumblr',
   score: 5
 }]
 
-const postList = new Immutable.List(samplePosts)
+const postList = new Immutable.List([])
+// const postList = new Immutable.List(samplePosts)
 
 export default function feedReducer(state = postList, action){
   switch(action.type){
-    case types.INITIALIZE_STORE:
-      return state
     case types.UPDATE_POSTS:
       break
     case types.INSERT_POSTS:
-      return insertPosts(state, action.contents)
+      return insertPosts(state, action.posts)
       break
     default:
       return state
@@ -26,5 +25,5 @@ export default function feedReducer(state = postList, action){
 }
 
 function insertPosts(state, posts){
-  return state
+  return state.concat(posts)
 }

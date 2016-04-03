@@ -9,7 +9,6 @@ export default class Dashboard extends React.Component {
     super(props);
     this.state = {
       message: 'Loading',
-      posts: [ ],
       feeds: [ ]
     };
   }
@@ -27,6 +26,7 @@ export default class Dashboard extends React.Component {
     const { dashState, dispatch } = this.props
     var feeds = this.state.feeds.map(feed => {
       return <Feed
+        dispatch={this.props.dispatch}
         posts={dashState}
         key={feed.id}
         id={feed.id}

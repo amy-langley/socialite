@@ -11,11 +11,12 @@ export default class TwitterAdapter extends AdapterBase{
     return credentials
   }
 
-  makeItem(tweet){
+  makeItem(tweet, username){
     return {
       title: '',
       markup: tweet.text,
       source: 'twitter',
+      username:username,
       score: tweet.retweet_count + tweet.favorite_count
   } }
 
@@ -25,7 +26,7 @@ export default class TwitterAdapter extends AdapterBase{
     twitter.get('statuses/user_timeline', (err, tweets, response) => {
       if(err) res.status(500).send(JSON.stringify(err))
       else {
-        var items = tweets.map(tweet => this.makeItem(tweet))
+        var items = tweets.map(tweet => this.makeItem(tweet, acct.username))
         res.send(JSON.stringify(items))
       }
     })

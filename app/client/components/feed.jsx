@@ -1,12 +1,15 @@
 import React from 'react'
+import {connect} from 'react-redux'
 
+import * as creators from '../redux/action-creators/feed-actions.js'
+
+@connect(state=>({feedState: state.feedReducer}))
 export default class Feed extends React.Component{
 
   constructor(props){
     super(props)
     this.state = {
-      message: '',
-      posts: []
+      message: ''
     }
   }
 
@@ -20,9 +23,10 @@ export default class Feed extends React.Component{
         return response.json()
     }).
     then(responseObj  => {
-      this.setState({posts: responseObj, message: ''})
+      this.setState({message: ''})
+      this.props.dispatch(creators.insertPosts(responseObj))
     }).
-    catch(err => err.text()).
+    catch(err => err.text ? err.text() : err).
     then(errMesg => this.setState({message: errMesg}))
   }
 
@@ -43,6 +47,8 @@ export default class Feed extends React.Component{
     })
   }
 
+  isMine = (post) => post.source == this.props.adapter && post.username == this.props.username
+
   render() {
     var iconClass = ['fa', `fa-${this.props.adapter}`].join(' ')
     return (
@@ -54,7 +60,7 @@ export default class Feed extends React.Component{
           <a className="uk-button uk-button-small uk-button-danger uk-margin-left" style={{display: 'none'}} href="/api/logout">log out</a>
         </div>
         <h3 className="uk-panel-title"><i className={iconClass}></i> {this.props.username}</h3>
-        {this.props.posts.filter(post => post.source == this.props.adapter).map(function(post,i){
+        {this.props.posts.filter(this.isMine).map(function(post,i){
           var markup = {__html: post.markup}
           return <div key={i} className="uk-panel uk-panel-box" style={{marginBottom: '1em'}}>
             <h4 className="uk-panel-header uk-panel-title">{post.title}</h4>
