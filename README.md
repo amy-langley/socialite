@@ -14,3 +14,5 @@ To get your socialite development environment runnable, you need to do the follo
 1. (optional) customize your password salt in `salt.json`
 1. Update `grant-config.json` with your API keys
 1. `node app/database/init.js`
+
+![Alpha Screengrab](http://i.imgur.com/65xTmy5.png)
