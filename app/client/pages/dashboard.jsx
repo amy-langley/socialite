@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import Feed from '../components/feed'
+import SimpleFeed from '../components/simple-feed.jsx'
 
 @connect(state=>({dashState: state.feedReducer}))
 export default class Dashboard extends React.Component {
@@ -25,7 +25,7 @@ export default class Dashboard extends React.Component {
   render() {
     const { dashState, dispatch } = this.props
     var feeds = this.state.feeds.map(feed => {
-      return <Feed
+      return <SimpleFeed
         dispatch={this.props.dispatch}
         posts={dashState}
         key={feed.id}

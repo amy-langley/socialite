@@ -4,7 +4,7 @@ import classnames from 'classnames'
 
 import * as creators from '../redux/action-creators/feed-actions.js'
 
-import FeedPost from './feedpost.jsx'
+import SimplePost from './simple-post.jsx'
 
 @connect(state=>({feedState: state.feedReducer}))
 export default class Feed extends React.Component{
@@ -56,7 +56,7 @@ export default class Feed extends React.Component{
     filter(this.isMine).
     sortBy(post=>-post.id).
     map(function(post,i){
-      return <FeedPost key={i} post={post} />
+      return <SimplePost key={i} post={post} />
     })
 
   isMine = (post) => post.source == this.props.adapter && post.username == this.props.username

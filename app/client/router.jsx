@@ -7,10 +7,7 @@ import PageNotFound from 'pages/page-not-found'
 import Dashboard from 'pages/dashboard'
 import ConfigureAccounts from 'pages/configure-accounts'
 
-var Root = React.createClass({
-  render: function() {
-    return (
-      <Router history={browserHistory}>
+const routes = <Router history={browserHistory}>
         <Route path="/" component={App}>
           <IndexRedirect to="/dashboard" />
           <Route path="/dashboard" component={Dashboard} />
@@ -18,8 +15,9 @@ var Root = React.createClass({
           <Route path="*" component={PageNotFound} />
         </Route>
       </Router>
-    )
-  }
+
+var Root = React.createClass({
+  render: () => routes
 })
 
 ReactDOM.render(<Root />, document.getElementById('root'));
