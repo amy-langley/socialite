@@ -16,7 +16,7 @@ export default class TumblrAdapter extends AdapterBase{
     return {
       id: post.id,
       title: post.title,
-      markup: post.body || post.photos[0].alt_sizes[1].url, //JSON.stringify(post.photos),
+      markup: post.body || (post.photos ? post.photos[0].alt_sizes[1].url : ''), //JSON.stringify(post.photos),
       source: 'tumblr',
       username: username,
       score: post.note_count
