@@ -6,7 +6,8 @@ module.exports = {
     client: 'sqlite3',
     connection: {
       filename: 'database/socialite.db'
-    }
+    },
+    useNullAsDefault: true
   }
 
   // staging: {
