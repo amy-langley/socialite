@@ -25,10 +25,10 @@ export default class TumblrAdapter extends AdapterBase{
   fetchPosts(acct, res){
     var tumblr = Tumblr.createClient(this.makeCredentials(acct))
 
-    tumblr.posts(acct.username, (err, resp) => {
+    tumblr.posts(acct.get('username'), (err, resp) => {
       if(err) res.status(500).send(JSON.stringify(err))
       else{
-        var items = resp.posts.map(post => this.makeItem(post,acct.username))
+        var items = resp.posts.map(post => this.makeItem(post,acct.get('username')))
         res.send(JSON.stringify(items))
       }
     })

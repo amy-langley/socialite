@@ -7,6 +7,7 @@ exports.up = function(knex, Promise) {
     table.string('username')
     table.string('token')
     table.string('secret')
+    table.timestamps()
   }).then(function(){
     console.log('Created table \'linked_accounts\'')
   })

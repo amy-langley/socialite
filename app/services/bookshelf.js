@@ -1,5 +1,7 @@
 import knex from 'knex'
-import knex_config from '/knexfile'
+var knex_config  = require('../../knexfile')[process.env.NODE_ENV || 'development']
 
-var bookshelf = module.exports = require('bookshelf')(knex(knex_config))
+var bookshelf = require('bookshelf')(knex(knex_config))
 bookshelf.plugin('registry')
+
+module.exports = bookshelf

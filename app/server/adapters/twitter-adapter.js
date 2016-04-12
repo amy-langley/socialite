@@ -27,7 +27,7 @@ export default class TwitterAdapter extends AdapterBase{
     twitter.get('statuses/user_timeline', (err, tweets, response) => {
       if(err) res.status(500).send(JSON.stringify(err))
       else {
-        var items = tweets.map(tweet => this.makeItem(tweet, acct.username))
+        var items = tweets.map(tweet => this.makeItem(tweet, acct.get('username')))
         res.send(JSON.stringify(items))
       }
     })
