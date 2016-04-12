@@ -12,7 +12,10 @@ import config from '../../webpack.config.js'
 import TumblrAdapter from './adapters/tumblr-adapter.js'
 import TwitterAdapter from './adapters/twitter-adapter.js'
 
-import {user, linkedAccount} from '../shared/models/schema.js'
+// import bookshelf from '../services/bookshelf'
+// var User = require('../models/user')
+import {User, LinkedAccount} from '../models'
+// var models = require('../models')
 
 const isDeveloping = process.env.NODE_ENV !== 'production'
 const port = isDeveloping ? 3000 : process.env.PORT
@@ -31,8 +34,8 @@ app.use(new Grant(grantConfig))
 
 app.get('/api/session', function(req, res){
   req.session.userId = req.session.userId || 1
-  user.findAll({where: {id: req.session.userId}, include: [{model: linkedAccount}]}).then(result => {
-    res.send(JSON.stringify(result))
+  User.where('id', 1).fetch({withRelated: ['linkedAccounts']}).then(function(user){
+    res.send(JSON.stringify(user))
   })
 })
 app.post('/api/session', function(req, res){
