@@ -8,11 +8,11 @@ import webpackHotMiddleware from 'webpack-hot-middleware'
 import bodyParser from 'body-parser'
 import Grant from 'grant-express'
 
-import config from '../../webpack.config.js'
+import config from '../webpack.config.js'
 import TumblrAdapter from './adapters/tumblr-adapter.js'
 import TwitterAdapter from './adapters/twitter-adapter.js'
 
-import {User, LinkedAccount} from '../models'
+import {User, LinkedAccount} from './models'
 
 const isDeveloping = process.env.NODE_ENV !== 'production'
 const port = isDeveloping ? 3000 : process.env.PORT
@@ -20,7 +20,7 @@ const app = express()
 
 const tumblrAdapter = new TumblrAdapter();
 const twitterAdapter = new TwitterAdapter();
-const grantConfig = require('../../grant-config.json')
+const grantConfig = require('../grant-config.json')
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
@@ -66,7 +66,7 @@ if (isDeveloping) {
   app.use(middleware)
   app.use(webpackHotMiddleware(compiler))
   app.get('*', function response(req, res) {
-    var p = path.join(__dirname, '..', '..', 'dist', 'index.html')
+    var p = path.join(__dirname, '..', 'dist', 'index.html')
 
     res.write(middleware.fileSystem.readFileSync(p))
     res.send()
