@@ -12,10 +12,7 @@ import config from '../../webpack.config.js'
 import TumblrAdapter from './adapters/tumblr-adapter.js'
 import TwitterAdapter from './adapters/twitter-adapter.js'
 
-// import bookshelf from '../services/bookshelf'
-// var User = require('../models/user')
 import {User, LinkedAccount} from '../models'
-// var models = require('../models')
 
 const isDeveloping = process.env.NODE_ENV !== 'production'
 const port = isDeveloping ? 3000 : process.env.PORT
@@ -23,7 +20,7 @@ const app = express()
 
 const tumblrAdapter = new TumblrAdapter();
 const twitterAdapter = new TwitterAdapter();
-const grantConfig = require('../config/grant-config.json')
+const grantConfig = require('../../grant-config.json')
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
