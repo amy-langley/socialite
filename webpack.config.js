@@ -18,7 +18,7 @@ module.exports = {
   },
   plugins: [
     new CopyWebpackPlugin([
-      {from: 'app/assets', to: 'assets' }
+      {from: 'assets', to: 'assets' }
     ], {
       ignore: ['**/src/**', '*.txt', '**/scss/**', '**/less/**']
     }),

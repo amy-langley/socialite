@@ -19,7 +19,7 @@ module.exports = {
   },
   plugins: [
     new CopyWebpackPlugin([
-      { from: 'app/assets', to: 'assets' }
+      { from: 'assets', to: 'assets' }
     ]),
     new HtmlWebpackPlugin({
       template: 'app/client/index.tpl.html',
