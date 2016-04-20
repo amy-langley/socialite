@@ -7,6 +7,12 @@ module.exports = {
     connection: {
       filename: 'database/socialite.db'
     },
+    seeds: {
+      directory: './database/seeds'
+    },
+    migrations: {
+      directory: './database/migrations'
+    },
     pool: {
       min: 1,
       max: 1

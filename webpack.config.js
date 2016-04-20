@@ -9,7 +9,7 @@ module.exports = {
   devtool: 'eval-source-map',
   entry: [
     'webpack-hot-middleware/client?reload=true',
-    path.join(__dirname, 'app/client/router.jsx')
+    path.join(__dirname, 'client/router.jsx')
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
@@ -18,12 +18,12 @@ module.exports = {
   },
   plugins: [
     new CopyWebpackPlugin([
-      {from: 'app/assets', to: 'assets' }
+      {from: 'assets', to: 'assets' }
     ], {
       ignore: ['**/src/**', '*.txt', '**/scss/**', '**/less/**']
     }),
     new HtmlWebpackPlugin({
-      template: 'app/client/index.tpl.html',
+      template: 'client/index.tpl.html',
       inject: 'body',
       filename: 'index.html'
     }),

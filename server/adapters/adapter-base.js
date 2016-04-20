@@ -1,7 +1,7 @@
 import express from 'express'
-import grantConfig from '../../config/grant-config.json'
+import grantConfig from '../../grant-config.json'
 
-import {User, LinkedAccount} from '../../models'
+import {User, LinkedAccount} from '../models'
 
 export default class AdapterBase{
 
