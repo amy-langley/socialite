@@ -1,5 +1,6 @@
 /* eslint no-console: 0 */
 import path from 'path'
+import fs from 'fs'
 import express from 'express'
 import session from 'express-session'
 import webpack from 'webpack'
@@ -7,12 +8,18 @@ import webpackMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 import bodyParser from 'body-parser'
 import Grant from 'grant-express'
+import cors from 'cors'
 
 import config from '../webpack.config.js'
 import TumblrAdapter from './adapters/tumblr-adapter.js'
 import TwitterAdapter from './adapters/twitter-adapter.js'
 
 import {User, LinkedAccount} from './models'
+
+import API from './services/api'
+
+const modulePath = path.join(__dirname, 'models');
+const resources = fs.readdirSync(modulePath);
 
 const isDeveloping = process.env.NODE_ENV !== 'production'
 const port = isDeveloping ? 3000 : process.env.PORT
@@ -22,12 +29,26 @@ const tumblrAdapter = new TumblrAdapter();
 const twitterAdapter = new TwitterAdapter();
 const grantConfig = require('../grant-config.json')
 
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
-
+app.use(bodyParser.json({
+  type: ['application/json', 'application/vnd.api+json']
+}))
 app.use(session({secret: 'shh dont tell', resave: true, saveUninitialized: false}))
-
 app.use(new Grant(grantConfig))
+
+API.register('user')
+
+// resources.forEach(function (resource) {
+//   if(resource=='index.js') return
+//   API.register(resource)
+//   app.use(API.endpoint(resource))
+// })
+
+app.get('/v1', function (request, response) {
+  response.set('Content-Type', 'application/json');
+  response.send(JSON.stringify(API.index(), null, 2));
+});
 
 app.get('/app/session', function(req, res){
   req.session.userId = req.session.userId || 1
