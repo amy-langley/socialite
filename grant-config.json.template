@@ -6,6 +6,6 @@
   "tumblr": {
     "key": "[YOUR CONSUMER KEY HERE]",
     "secret": "[YOUR CONSUMER SECRET HERE]",
-    "callback": "/api/tumblr/register"
+    "callback": "/app/adapter/tumblr/register"
   }
 }

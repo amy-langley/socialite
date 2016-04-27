@@ -29,21 +29,21 @@ app.use(session({secret: 'shh dont tell', resave: true, saveUninitialized: false
 
 app.use(new Grant(grantConfig))
 
-app.get('/api/session', function(req, res){
+app.get('/app/session', function(req, res){
   req.session.userId = req.session.userId || 1
   User.where('id', 1).fetch({withRelated: ['linkedAccounts']}).then(function(user){
     res.send(JSON.stringify(user))
   })
 })
-app.post('/api/session', function(req, res){
+app.post('/app/session', function(req, res){
   Object.assign(req.session, req.body)
   res.sendStatus(200)
 })
 
-app.use('/api/tumblr',tumblrAdapter.middleware());
-app.use('/api/twitter', twitterAdapter.middleware());
+app.use('/app/adapter/tumblr',tumblrAdapter.middleware());
+app.use('/app/adapter/twitter', twitterAdapter.middleware());
 
-app.get('/api/logout', function(req, res){
+app.get('/app/logout', function(req, res){
   req.session.destroy()
   res.redirect('/')
 })

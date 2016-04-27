@@ -14,7 +14,7 @@ export default class Dashboard extends React.Component {
   }
 
   componentDidMount(){
-    fetch(`/api/session`, {credentials: 'include'}).
+    fetch(`/app/session`, {credentials: 'include'}).
       then(response => { return response.json() }).
       then(response => {
         var feeds = response.linkedAccounts.map(a => { return { id: a.id, adapter: a.service, feed: a.username } })

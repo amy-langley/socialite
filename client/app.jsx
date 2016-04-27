@@ -2,7 +2,7 @@ import React from 'react'
 import { Provider } from 'react-redux'
 
 import { compose, createStore, combineReducers } from 'redux'
-import * as reducers from './redux/reducers/index.js'
+import * as reducers from './redux/reducers'
 
 import Navbar from 'components/navbar'
 

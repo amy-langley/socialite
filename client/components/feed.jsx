@@ -19,7 +19,7 @@ export default class Feed extends React.Component{
 
   fetchPosts = () => {
     this.setState({message: 'Loading...', loading: true})
-    fetch(`/api/${this.props.adapter}/posts/${this.props.id}`, {credentials: 'include'}).
+    fetch(`/app/adapter/${this.props.adapter}/posts/${this.props.id}`, {credentials: 'include'}).
       then(response => {
         if(!response.ok)
           throw response
@@ -39,7 +39,7 @@ export default class Feed extends React.Component{
   }
 
   authenticateAdapter = () => {
-    fetch(`/api/session`, {
+    fetch(`/app/session`, {
       credentials: 'include',
       method: 'post',
       headers: new Headers({

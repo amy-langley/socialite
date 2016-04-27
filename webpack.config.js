@@ -47,23 +47,11 @@ module.exports = {
       exclude: /node_modules/,
       loaders: ['coffee', 'cjsx']
     }, {
-      test: /\.coffee$/,
-      loader: 'coffee'
-    }, {
       test: /\.json?$/,
       loader: 'json'
     }, {
       test   : /\.css$/,
       loaders: ['style', 'css']
-    }, {
-      test: /\.s[ac]ss$/,
-      loaders: ['style', 'css', 'sass?sourceMap']
-    }, {
-      test: /\.styl$/,
-      loader: 'style-loader!css-loader!stylus-loader'
-    }, {
-      test: /\.rt/,
-      loader: "react-templates-loader"
     }, {
       test: /\.(jpg|png|gif|otf|eot|svg|ttf|woff\d?)$/,
       loader: 'file-loader'
