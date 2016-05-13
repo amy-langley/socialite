@@ -25,6 +25,7 @@
     "classnames": "^2.2.3",
     "express": "^4.13.4",
     "express-session": "^1.13.0",
+    "fb": "^1.0.2",
     "fetch": "^1.0.1",
     "grant-express": "^3.5.5",
     "immutable": "^3.7.6",
