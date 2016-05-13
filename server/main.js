@@ -11,6 +11,7 @@ import Grant from 'grant-express'
 import config from '../webpack.config.js'
 import TumblrAdapter from './adapters/tumblr-adapter.js'
 import TwitterAdapter from './adapters/twitter-adapter.js'
+import FacebookAdapter from './adapters/facebook-adapter.js';
 
 import {User, LinkedAccount} from './models'
 
@@ -20,7 +21,8 @@ const app = express()
 
 const tumblrAdapter = new TumblrAdapter();
 const twitterAdapter = new TwitterAdapter();
-const grantConfig = require('../grant-config.json')
+const facebookAdapter = new FacebookAdapter();
+const grantConfig = require('../grant-config.json');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
@@ -40,8 +42,9 @@ app.post('/api/session', function(req, res){
   res.sendStatus(200)
 })
 
-app.use('/api/tumblr',tumblrAdapter.middleware());
+app.use('/api/tumblr', tumblrAdapter.middleware());
 app.use('/api/twitter', twitterAdapter.middleware());
+app.use('/api/facebook', facebookAdapter.middleware());
 
 app.get('/api/logout', function(req, res){
   req.session.destroy()
